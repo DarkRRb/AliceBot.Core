@@ -16,5 +16,5 @@ public interface IActions {
     public Task RecallMessageAsync(string messageId, CancellationToken token);
 
     // Request
-    public Task SetGroupRequestAsync(string requestId, CancellationToken token);
+    public Task SetRequestAsync(string requestId, CancellationToken token);
 }
