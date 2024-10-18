@@ -59,6 +59,8 @@ internal class SimpleProtocol(Alice alice) : IProtocol, IProtocolEvents, IAction
     public event Action<IProtocol, GroupMessageData>? OnGroupMessage;
 
     public event Action<IProtocol, PrivateMessageData>? OnPrivateMessage;
+    
+    public event Action<IProtocol, GroupRequestData>? OnGroupRequest;
 
     public async Task ScheduledGroupMessageEventsAsync(CancellationToken token) {
         while (!token.IsCancellationRequested) {
@@ -116,6 +118,10 @@ internal class SimpleProtocol(Alice alice) : IProtocol, IProtocolEvents, IAction
         _cts.Cancel();
         _cts = new();
         return Task.CompletedTask;
+    }
+
+    public Task SetGroupRequestAsync(string requestId, CancellationToken token) {
+        throw new NotImplementedException();
     }
 }
 

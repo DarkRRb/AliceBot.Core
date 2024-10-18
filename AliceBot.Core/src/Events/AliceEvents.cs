@@ -13,6 +13,9 @@ public class AliceEvents : IProtocolEvents {
 
     public event Action<IProtocol, GroupMessageData>? OnGroupMessage;
 
+    public event Action<IProtocol, GroupRequestData>? OnGroupRequest;
+
+    // Alice
     internal void EmitAliceStarted() {
         OnAliceStarted?.Invoke();
     }
@@ -21,6 +24,7 @@ public class AliceEvents : IProtocolEvents {
         OnAliceStopped?.Invoke();
     }
 
+    // Message
     private void EmitPrivateMessage(IProtocol protocol, PrivateMessageData data) {
         OnPrivateMessage?.Invoke(protocol, data);
     }
@@ -29,13 +33,19 @@ public class AliceEvents : IProtocolEvents {
         OnGroupMessage?.Invoke(protocol, data);
     }
 
+    private void EmitGroupRequest(IProtocol protocol, GroupRequestData data) {
+        OnGroupRequest?.Invoke(protocol, data);
+    }
+
     internal void Aggregate(IProtocolEvents events) {
         events.OnPrivateMessage += EmitPrivateMessage;
         events.OnGroupMessage += EmitGroupMessage;
+        events.OnGroupRequest += EmitGroupRequest;
     }
 
     internal void Disaggregate(IProtocolEvents events) {
         events.OnPrivateMessage -= EmitPrivateMessage;
         events.OnGroupMessage -= EmitGroupMessage;
+        events.OnGroupRequest -= EmitGroupRequest;
     }
 }
